@@ -23,11 +23,11 @@ export default function EventDetailsCard({event, isOpened, closeDetails}: EventD
             </button>
         </div>
         <section className='w-full h-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 overflow-y-auto '>
-            <ActorDetails name={event.actor_name} email={event.target_name} id={event.actor_id}/>
-            <ActionDetails name={event.action.name} object={event.action.object} id={event.action.id}/>
+            <ActorDetails name={event.actor_name} email={event.target_name} id={event.actor_id||'#'}/>
+            <ActionDetails name={event.action.name} object={event.action.object} id={event.action.id||'#'}/>
             <DateDetails date={formatDate(event.occurred_at)} />
-            <MetaDataDetails redirect={event.metadata.redirect} description={event.metadata.description} xRequestId={event.metadata.x_request_id} />
-            <TargetDetails name={event.target_name} location={event.location} id={event.target_id} />
+            <MetaDataDetails redirect={event.metadata.redirect} description={event.metadata.description} xRequestId={event.metadata.x_request_id||'#'} />
+            <TargetDetails name={event.target_name} location={event.location} id={event.target_id||'#'} />
         </section>
     </section>
   )
