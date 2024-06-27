@@ -1,7 +1,7 @@
 'use client'
 import { useMemo, useState } from "react";
 import { formatDate } from "@/utils/helpers";
-import { IEvent } from "@/types/Event";
+import IEvent  from "@/types/Event";
 import GradientAvatar from "@/components/activity-table/GradientAvatar";
 import EventDetailsCard from "@/components/activity-table/EventDetailsCard";
 import '@/styles/tableStyles.css'

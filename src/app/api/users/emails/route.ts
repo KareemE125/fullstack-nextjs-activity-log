@@ -1,9 +1,13 @@
-import { DummyEvents } from "@/utils/constants";
+import prisma from "../../../../../prisma/client"
 
 export async function GET() {
     try {
-      let emails : string[] = DummyEvents.map(event => event.target_name);
-
+      let emails: string[] = await prisma.event.findMany({
+        distinct: ['target_name'],
+        select: {
+          target_name: true
+        }
+      }).then((res) => res.map((email) => email.target_name));
     
       return new Response(JSON.stringify(emails), {
         status: 200,

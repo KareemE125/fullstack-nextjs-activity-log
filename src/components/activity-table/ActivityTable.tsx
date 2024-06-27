@@ -7,7 +7,7 @@ import { createArrayOfSize, formatDate } from '@/utils/helpers';
 import TableRecordSkeleton from './TableRecordSkeleton';
 import { useEffect, useState } from 'react';
 import { CACHE_INVALIDATION_TIME } from '@/utils/constants';
-import { IEvent } from '@/types/Event';
+import IEvent  from '@/types/Event';
 import toast from 'react-hot-toast';
 import useSWRInfinite from 'swr/infinite';
 

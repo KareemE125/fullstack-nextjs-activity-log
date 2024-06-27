@@ -1,4 +1,4 @@
-import { IEvent } from '@/types/Event'
+import IEvent  from '@/types/Event'
 import { formatDate } from '@/utils/helpers'
 
 

@@ -1,5 +1,5 @@
 import { formatDate } from "@/utils/helpers";
-import { IEvent } from "@/types/Event";
+import IEvent  from "@/types/Event";
 
 export function exportToCSV(data: IEvent[]) {
     // Define the headers you want to include

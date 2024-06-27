@@ -1,5 +1,5 @@
 import useSWR from "swr"
-import { IEvent } from "@/types/Event"
+import IEvent  from "@/types/Event"
 
 export function useUsersEmails(options?: object){
     return useSWR<string[]>('/api/users/emails', {...options})

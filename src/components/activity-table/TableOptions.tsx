@@ -1,6 +1,6 @@
 'use client'
 import { useUsersEmails } from "@/services/queryHooks"
-import { IEvent } from "@/types/Event"
+import IEvent  from "@/types/Event"
 import { exportToCSV } from "@/utils/events-csv"
 import { useState } from "react"
 import toast from "react-hot-toast"
@@ -98,28 +98,24 @@ function FilterListDropMenu({filterValues, setFilterValues}: {filterValues:strin
     setFilterValues(newSelectedActors)
   }
   
-  const records : React.ReactNode[] = []
-  const dropList: Set<string> = new Set(emails)
-  dropList.forEach((name)=>{
-    records.push(
-      <li key={name} className="flex items-center pb-1">
-        <input 
-          id={name} type="checkbox" value={name} 
-          onChange={handleFilter}
-          className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 inline " 
-        />
-        <label htmlFor={name} className="ml-2 text-sm font-medium text-gray-900">
-          {name}
-        </label>
-      </li>
-    ) 
-  })
-
   return (
     <div className="absolute hidden group-focus-within:block top-10 right-1/2 translate-x-1/2 z-10 w-fit min-w-56 p-3 pb-4 bg-white rounded-lg shadow">
       <p className="mb-3 text-sm font-medium text-gray-900 uppercase">Actor</p>
       <ul className="h-60 overflow-y-auto py-1 space-y-2 text-sm ">
-        {records}
+        {
+          emails?.map((email) => (
+            <li key={email} className="flex items-center pb-1">
+              <input 
+                id={email} type="checkbox" value={email} 
+                onChange={handleFilter}
+                className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 inline " 
+              />
+              <label htmlFor={email} className="ml-2 text-sm font-medium text-gray-900">
+                {email}
+              </label>
+            </li>
+          ))
+        }
       </ul>
     </div>
   )

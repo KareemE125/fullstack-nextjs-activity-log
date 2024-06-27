@@ -1,34 +1,53 @@
-import { IEvent } from '@/types/Event';
-import { DummyEvents } from '@/utils/constants';
+import IEvent  from '@/types/Event';
+import EventQueryParams from '@/types/EventQueryParams';
 import { generateRandomCode } from '@/utils/helpers';
 import { NextRequest } from 'next/server';
+import prisma from '../../../../prisma/client';
 
 
 export async function POST(request: NextRequest) {
   try {
-    const eventData = await request.json(); // Assuming JSON body data for event creation
-
-    const newEvent: IEvent = 
-    {
-      id: 'evt_'+generateRandomCode(),
-      object: "event",
-      actor_id: "user_3VG74289PUA2",
-      actor_name: "Ali Salah",
-      group: "instatus.com",
-      action: {
-        id: "evt_action_"+generateRandomCode(13),
-        object: "event_action",
-        name: "user.login_succeeded"
+    const event: IEvent = await request.json();
+    
+    // Create the Action object
+    const action = await prisma.action.create({
+      data: {
+        id: `evt_action_${generateRandomCode(11)}`, // Example ID generation
+        object: event.action.object,
+        name: event.action.name
       },
-      target_id: "user_DOKVD1U3L030",
-      target_name: "ali@instatus.com",
-      location: "105.40.62.95",
-      occurred_at: new Date().toISOString(),
-      metadata: {
-        redirect: "/setup",
-        description: "User login succeeded.",
-        x_request_id: "req_W1Y13QOHMI5H"
-      }
+    });
+
+    // Create the Metadata object
+    const metadata = await prisma.metadata.create({
+      data: {
+        redirect: event.metadata.redirect,
+        description: event.metadata.description,
+        x_request_id: `req_${generateRandomCode(12)}`,
+      },
+    });
+
+    // Create the Event object using the IDs of Action and Metadata
+    const fullEvent = await prisma.event.create({
+      data: {
+        id: `evt_${generateRandomCode(12)}`, // Example ID generation
+        object: event.object,
+        actor_id: `user_${generateRandomCode(12)}`,
+        actor_name: event.actor_name,
+        group: event.group,
+        actionId: action.id,
+        target_id: `user_${generateRandomCode(12)}`,
+        target_name: event.target_name,
+        location: event.location,
+        occurred_at: new Date().toISOString(),
+        metadataId: metadata.id, 
+      },
+    });
+    
+    const newEvent: IEvent = {
+      ...fullEvent,
+      action: action,
+      metadata: metadata,
     }
 
     return new Response(JSON.stringify({ status: true, message: 'Event created successfully', event: newEvent }), {
@@ -38,7 +57,7 @@ export async function POST(request: NextRequest) {
       },
     });
   } catch (error) {
-    return new Response(JSON.stringify({ status: false, message: 'Failed to create event' }), {
+    return new Response(JSON.stringify({ status: false, message: 'Failed to create event', error }), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
@@ -47,28 +66,23 @@ export async function POST(request: NextRequest) {
   }
 }
 
-
-
-
-interface EventQueryParams {
-  page?: number; // Pagination: Page number
-  limit?: number; // Pagination: Items per page
-  searchTerm?: string; // Search: searchTerm from search bar
-  emails?: string; // Filter: event.target_name
-}
-
 export async function GET(request: NextRequest) {
   try {
     const queryParams: EventQueryParams = Object.fromEntries(new URL(request.url).searchParams);
 
+    let filteredEvents : IEvent[] = await prisma.event.findMany({
+      include: {
+        action: true,
+        metadata: true
+      }
+    })
+    
     // Pagination
     const page = queryParams.page ? parseInt(queryParams.page.toString(), 10) : 1;
     const limit = queryParams.limit ? parseInt(queryParams.limit.toString(), 10) : 5;
     const offset = (page - 1) * limit;
 
     // Filtering and Searching
-    let filteredEvents : IEvent[] = DummyEvents;
-
     if (queryParams.searchTerm) {
       const searchQuery = queryParams.searchTerm.toLowerCase();
       filteredEvents = filteredEvents.filter(event => 
@@ -92,7 +106,7 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch (error) {
-    return new Response(JSON.stringify({ status: false, message: 'Failed to fetch events' }), {
+    return new Response(JSON.stringify({ status: false, message: 'Failed to fetch events', error }), {
       status: 500,
       headers: {
         'Content-Type': 'application/json',

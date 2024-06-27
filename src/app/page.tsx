@@ -1,10 +1,12 @@
+import CreateEvent from "@/components/CreateEvent";
 
 export default function App() {
   return (
     <main>
-      <h1 className="text-4xl text-center font-bold mb-6">
-        Instatus Activity Logs
+      <h1 className="text-4xl text-center font-bold text-teal-800 my-6 ">
+        Create Activity Log
       </h1>
+      <CreateEvent />
     </main>
   )
 }
@@ -28,7 +30,7 @@ export default async function App() {
 
 async function prefetchData() {
   await new Promise((resolve) => setTimeout(resolve, 2000));
-  const events = DummyEvents;
+  const events = // fetch the events from the server
   return {
     "/events": {events},
   };

@@ -22,7 +22,7 @@ model Event {
   action      Action   @relation(fields: [actionId], references: [id])
   actionId    String
   target_id   String
-  target_name String   @unique
+  target_name String
   location    String
   occurred_at String
   metadata    Metadata @relation(fields: [metadataId], references: [id])
