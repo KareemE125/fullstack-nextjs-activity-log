@@ -24,7 +24,7 @@ model Event {
   target_id   String
   target_name String
   location    String
-  occurred_at String
+  occurred_at DateTime @default(now())
   metadata    Metadata @relation(fields: [metadataId], references: [id])
   metadataId  Int
 }
@@ -37,7 +37,7 @@ model Action {
 }
 
 model Metadata {
-  id           Int  @id @default(autoincrement())
+  id           Int     @id @default(autoincrement())
   redirect     String
   description  String
   x_request_id String
