@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import IEvent  from '@/types/Event';
 import EventQueryParams from '@/types/EventQueryParams';
 import { generateRandomCode } from '@/utils/helpers';
@@ -74,6 +76,9 @@ export async function GET(request: NextRequest) {
       include: {
         action: true,
         metadata: true
+      },
+      orderBy: {
+        occurred_at: 'desc'
       }
     })
     

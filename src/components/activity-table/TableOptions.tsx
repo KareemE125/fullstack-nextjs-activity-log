@@ -104,7 +104,7 @@ function FilterListDropMenu({filterValues, setFilterValues}: {filterValues:strin
   return (
     <div className="absolute hidden group-focus-within:block top-10 right-1/2 translate-x-1/2 z-10 w-fit min-w-56 p-3 pb-4 bg-white rounded-lg shadow">
       <p className="mb-3 text-sm font-medium text-gray-900 uppercase">Actor</p>
-      <ul className="h-60 overflow-y-auto py-1 space-y-2 text-sm ">
+      <ul className="h-60 overflow-y-auto pr-2 py-1 space-y-2 text-sm ">
         {
           emails?.map((email) => (
             <li key={email} className="flex items-center pb-1">

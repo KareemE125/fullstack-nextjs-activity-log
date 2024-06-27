@@ -2,7 +2,7 @@ import { MONTHS } from "./constants";
 
 export const createArrayOfSize = (size: number) => Array.from(Array(size).keys());
 
-export const formatDate = (dateString: string): string => {
+export const formatDate = (dateString: Date | string): string => {
   const date = new Date(dateString);
 
   if (isNaN(date.getTime())) {

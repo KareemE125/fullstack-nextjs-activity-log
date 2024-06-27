@@ -1,5 +1,3 @@
-import IEvent  from "@/types/Event";
-
 export const CACHE_INVALIDATION_TIME = 360000 // 6 minutes
 
 export const MONTHS = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ]

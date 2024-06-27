@@ -12,7 +12,7 @@ export default interface IEvent {
   target_id?: string;
   target_name: string;
   location: string;
-  occurred_at: string;
+  occurred_at: Date | string;
   metadata: {
     redirect: string;
     description: string;
