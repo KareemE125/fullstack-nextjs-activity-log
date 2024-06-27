@@ -14,8 +14,8 @@ const initialData = {
 }
 
 const validationSchema = Yup.object({
-    actorName: Yup.string().min(3, "Actor name must be at least 3 characters").required("Title is required"),
-    actionName: Yup.string().min(3, "Action name must be at least 3 characters").required("Title is required"),
+    actorName: Yup.string().min(3, "Actor name must be at least 3 characters").required("Actor name is required"),
+    actionName: Yup.string().min(3, "Action name must be at least 3 characters").required("Action name is required"),
     email: Yup.string().email("Invalid email address").required("Email is required")
 })
 
