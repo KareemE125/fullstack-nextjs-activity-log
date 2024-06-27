@@ -29,7 +29,10 @@ export default function TableOptions({events, filterValues, setFilterValues, sea
   }
 
   // Export Option
-  const exportHandler = () => exportToCSV(events)
+  const exportHandler = () => {
+    exportToCSV(events)
+    toast.success('Events exported successfully')
+  }
 
 
   // Live Option
